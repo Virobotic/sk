@@ -1,0 +1,22 @@
+﻿[
+  {
+    "id": 1,
+    "name": "Bajju",
+    "description": "The Bajju people are known for their rich farming traditions, brilliant cloth weaving, and vibrant festivals."
+  },
+  {
+    "id": 2,
+    "name": "Atyap",
+    "description": "The Atyap people are celebrated for their music, dance, and strong community heritage."
+  },
+  {
+    "id": 3,
+    "name": "Agworok (Kagoro)",
+    "description": "The Agworok community is known for agriculture, cultural ceremonies, and traditional craftsmanship."
+  },
+  {
+    "id": 4,
+    "name": "Irigwe",
+    "description": "The Irigwe people are recognized for storytelling, carving, and their ties to the land."
+  }
+]
