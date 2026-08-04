@@ -1,14 +1,14 @@
-[
+﻿[
   {
     "id": 1,
     "name": "Kagoro Hills",
-    "description": "A beautiful range of hills offering scenic views and hiking opportunities.",
-    "image": "kagoro_hills.jpg"
+    "description": "A beautiful range of hills offering scenic views, hiking and community gatherings.",
+    "image": "/images/kagorohill.jpg"
   },
   {
     "id": 2,
     "name": "Matsirga Waterfalls",
-    "description": "A stunning waterfall located in Madakiya, a popular spot for picnics and relaxation.",
-    "image": "matsirga_waterfalls.jpg"
+    "description": "A stunning waterfall near Madakiya, popular for picnics, fishing, and nature walks.",
+    "image": "/images/waterfall.jfif"
   }
 ]

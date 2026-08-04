@@ -1,12 +1,14 @@
-[
+﻿[
   {
     "id": 1,
     "name": "Afan National Festival",
-    "description": "A celebration of the new yam season, marking a time of harvest and thanksgiving."
+    "description": "A celebration of the new yam season in the Bajju communities, featuring music, traditional dress, and thanksgiving rituals.",
+    "image": "/images/afan.jpg"
   },
   {
     "id": 2,
     "name": "Tuk-Ham",
-    "description": "A cultural festival of the Ham people, showcasing their traditions and history."
+    "description": "A festival of the Ham people highlighting storytelling, dance, and communal memory in southern Kaduna.",
+    "image": "/images/ham.jfif"
   }
 ]

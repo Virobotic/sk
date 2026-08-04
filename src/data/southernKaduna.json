@@ -1,0 +1,32 @@
+{
+  "title": "Southern Kaduna, Nigeria",
+  "summary": "Southern Kaduna is the predominantly non-Hausa/Fulani region in southern Kaduna State, Nigeria. It is known for its cultural diversity, vibrant festivals, agricultural communities, and scenic natural landmarks.",
+  "overview": [
+    "Southern Kaduna is home to multiple indigenous ethnic groups including the Atyap, Bajju, Ham, Irigwe, Gwong, and many others.",
+    "The region is located within Kaduna State and includes towns such as Kafanchan, Kagoro, Zonkwa, and Kachia.",
+    "Local livelihoods center on farming, craft-making, music, and seasonal cultural festivals.",
+    "Southern Kaduna is often highlighted for its historic market towns, rolling hills, and waterfall destinations.",
+    "The area has a strong identity built around community traditions, languages, and cultural resilience."
+  ],
+  "facts": [
+    "It lies in the southern senatorial district of Kaduna State.",
+    "The population is made up of dozens of ethnic communities with distinct languages.",
+    "Agriculture is the main economic activity, with yams, maize, and potatoes widely grown.",
+    "Cultural festivals are major social events that preserve music, dance, and oral history.",
+    "Tourist sites include Kagoro Hills and Matsirga Waterfalls."
+  ],
+  "images": [
+    {
+      "src": "/images/kagorohill.jpg",
+      "caption": "Kagoro Hills in Southern Kaduna"
+    },
+    {
+      "src": "/images/waterfall.jfif",
+      "caption": "A waterfall near Southern Kaduna communities"
+    },
+    {
+      "src": "/images/atyap.jfif",
+      "caption": "Atyap cultural heritage"
+    }
+  ]
+}

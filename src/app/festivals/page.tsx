@@ -11,7 +11,10 @@ export default function FestivalsPage() {
 
       <section className="content-grid">
         {festivals.map((festival) => (
-          <article key={festival.id} className="card content-card">
+          <article key={festival.id} className="card content-card festival-card">
+            {festival.image ? (
+              <img src={festival.image} alt={festival.name} className="card-image" />
+            ) : null}
             <h2>{festival.name}</h2>
             <p>{festival.description}</p>
           </article>

@@ -1,12 +1,14 @@
-[
+﻿[
   {
     "id": 1,
     "name": "Miyan Kuka",
-    "description": "A traditional soup made from dried and ground baobab leaves."
+    "description": "A hearty soup prepared from powdered baobab leaves and served with fufu or rice.",
+    "image": "/images/images.jfif"
   },
   {
     "id": 2,
     "name": "Tuwo Shinkafa",
-    "description": "A type of Nigerian fufu made from rice flour."
+    "description": "A soft rice-based swallow eaten with sauces and stews during family gatherings.",
+    "image": "/images/house.jfif"
   }
 ]

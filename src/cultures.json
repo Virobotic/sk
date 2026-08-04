@@ -2,21 +2,25 @@
   {
     "id": 1,
     "name": "Bajju",
-    "description": "The Bajju people are known for their rich farming traditions, brilliant cloth weaving, and vibrant festivals."
+    "description": "The Bajju people are known for farming, vibrant cloth weaving, and the annual Afan yam festival.",
+    "image": "/images/Bajju.jpg"
   },
   {
     "id": 2,
     "name": "Atyap",
-    "description": "The Atyap people are celebrated for their music, dance, and strong community heritage."
+    "description": "The Atyap community around Zangon Kataf preserves music, dance, and local history through storytelling.",
+    "image": "/images/atyap.jfif"
   },
   {
     "id": 3,
     "name": "Agworok (Kagoro)",
-    "description": "The Agworok community is known for agriculture, cultural ceremonies, and traditional craftsmanship."
+    "description": "Agworok people live near the Kagoro Hills and are known for their craft, communal ceremonies, and hillside farming.",
+    "image": "/images/Gworok.png"
   },
   {
     "id": 4,
     "name": "Irigwe",
-    "description": "The Irigwe people are recognized for storytelling, carving, and their ties to the land."
+    "description": "The Irigwe people blend storytelling, carving, and farming traditions in a region rich with community ritual.",
+    "image": "/images/house.jfif"
   }
 ]

@@ -11,7 +11,10 @@ export default function FoodsPage() {
 
       <section className="content-grid">
         {foods.map((food) => (
-          <article key={food.id} className="card content-card">
+          <article key={food.id} className="card content-card food-card">
+            {food.image ? (
+              <img src={food.image} alt={food.name} className="card-image" />
+            ) : null}
             <h2>{food.name}</h2>
             <p>{food.description}</p>
           </article>

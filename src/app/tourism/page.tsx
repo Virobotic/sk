@@ -11,7 +11,10 @@ export default function TourismPage() {
 
       <section className="content-grid">
         {tourism.map((place) => (
-          <article key={place.id} className="card content-card">
+          <article key={place.id} className="card content-card tourism-card">
+            {place.image ? (
+              <img src={place.image.startsWith("/") ? place.image : `/images/${place.image}`} alt={place.name} className="card-image" />
+            ) : null}
             <h2>{place.name}</h2>
             <p>{place.description}</p>
           </article>

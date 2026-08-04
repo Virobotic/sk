@@ -11,7 +11,10 @@ export default function CulturesPage() {
 
       <section className="content-grid">
         {cultures.map((culture) => (
-          <article key={culture.id} className="card content-card">
+          <article key={culture.id} className="card content-card culture-card">
+            {culture.image ? (
+              <img src={culture.image} alt={culture.name} className="card-image" />
+            ) : null}
             <h2>{culture.name}</h2>
             <p>{culture.description}</p>
           </article>
