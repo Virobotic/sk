@@ -23,7 +23,7 @@ export default function Navbar() {
         <div className="brand-logo">SK</div>
         <div className="brand-text">
           <span>Southern Kaduna</span>
-          <p>Culture & Heritage</p>
+          <p>Minimal heritage guide</p>
         </div>
       </div>
 
@@ -40,34 +40,25 @@ export default function Navbar() {
       </button>
 
       <nav className={`nav-links-right${isOpen ? " open" : ""}`}>
-        {navItems.map((item) => {
-          const iconMap: Record<string, string> = {
-            Home: "mdi:home",
-            Cultures: "mdi:account-group",
-            Festivals: "mdi:party-popper",
-            Foods: "mdi:food",
-            Gallery: "mdi:image-multiple",
-            Museum: "mdi:bank-museum",
-            Tourism: "mdi:binoculars",
-            Tribes: "mdi:people-group",
-            Map: "mdi:map-marker",
-            Contact: "mdi:email",
-          };
-          const icon = iconMap[item.label] || "mdi:circle";
-          return (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                `nav-link${isActive ? " active" : ""}`
-              }
-              onClick={() => setIsOpen(false)}
-            >
-              <span className="iconify" data-icon={icon} data-inline="false" />
-              {item.label}
-            </NavLink>
-          );
-        })}
+        {navItems.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
+            onClick={() => setIsOpen(false)}
+          >
+            {item.label}
+          </NavLink>
+        ))}
+        <NavLink
+          to="/tribes"
+          className={({ isActive }) =>
+            `nav-link nav-link-cta${isActive ? " active" : ""}`
+          }
+          onClick={() => setIsOpen(false)}
+        >
+          Explore tribes
+        </NavLink>
       </nav>
     </header>
   );

@@ -6,7 +6,7 @@ export default function TourismPage() {
       <header className="page-header">
         <p className="eyebrow">Tourism</p>
         <h1>Places to visit in and around Southern Kaduna</h1>
-        <p>Find natural landmarks, cultural sites, and local experiences.</p>
+        <p>Natural landmarks, cultural sites, and low-key destinations worth slowing down for.</p>
       </header>
 
       <section className="content-grid">

@@ -26,35 +26,65 @@ function HomePage() {
       <section className="overview-panel">
         <div className="section-title">
           <p>Discover Southern Kaduna</p>
-          <h2>Heritage that shapes every community</h2>
+          <h2>Heritage that feels editorial, calm, and easy to explore</h2>
         </div>
 
-        <div className="home-intro">
-          <div className="intro-copy">
-            {southernKaduna.overview.map((line, index) => (
-              <p key={index}>{line}</p>
-            ))}
-          </div>
+        <div className="split-grid">
+          <article className="surface">
+            <div className="stack">
+              <p className="eyebrow">Overview</p>
+              {southernKaduna.overview.map((line, index) => (
+                <p key={index}>{line}</p>
+              ))}
+            </div>
+          </article>
 
-          <div className="facts-grid">
+          <div className="stat-grid">
             {southernKaduna.facts.map((fact, index) => (
-              <article key={index} className="card fact-item">
+              <article key={index} className="stat-card">
+                <strong>{String(index + 1).padStart(2, "0")}</strong>
                 <p>{fact}</p>
               </article>
             ))}
           </div>
         </div>
 
-        <div className="feature-gallery">
+        <div className="masonry-board">
+          <article className="pin-card pin-card-large">
+            <p className="eyebrow">Featured place</p>
+            <h3>Kagoro Hills</h3>
+            <p>
+              A landmark that gives the region its visual rhythm: steep terrain, layered settlements,
+              and a sense of quiet scale.
+            </p>
+            <img src="/images/kagorohill.jpg" alt="Kagoro Hills in Southern Kaduna" className="card-image" />
+          </article>
+
+          <article className="pin-card">
+            <p className="eyebrow">Heritage note</p>
+            <h3>Festival life</h3>
+            <p>Seasonal gatherings shape memory through dance, food, and communal rituals.</p>
+          </article>
+
+          <article className="pin-card pin-card-tall">
+            <p className="eyebrow">Cultural pulse</p>
+            <h3>Living communities</h3>
+            <p>
+              Southern Kaduna is not one story but many. The pinboard layout mirrors that layered
+              identity by giving each piece its own visual space.
+            </p>
+            <img src="/images/atyap.jfif" alt="Atyap cultural heritage" className="card-image" />
+          </article>
+
           {southernKaduna.images.map((item) => (
-            <article key={item.src} className="card gallery-feature">
+            <article key={item.src} className="pin-card">
               <img src={item.src} alt={item.caption} className="card-image" />
               <p>{item.caption}</p>
             </article>
           ))}
         </div>
 
-        <div className="grid-layout">
+        <div className="masonry-board secondary-board">
           <CulturalMap />
           <LanguageExplorer />
         </div>

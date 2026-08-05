@@ -23,9 +23,9 @@ const galleryItems = [
 
 export default function MuseumGallery() {
   return (
-    <section className="content-grid gallery-grid">
+    <section className="masonry-board">
       {galleryItems.map((item) => (
-        <article key={item.id} className="card content-card gallery-card">
+        <article key={item.id} className="pin-card">
           <img src={item.image} alt={item.title} className="card-image" />
           <h3>{item.title}</h3>
         </article>

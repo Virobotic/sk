@@ -6,7 +6,7 @@ export default function FoodsPage() {
       <header className="page-header">
         <p className="eyebrow">Foods</p>
         <h1>Traditional dishes from the region</h1>
-        <p>Discover meals and ingredients that are central to Southern Kaduna life.</p>
+        <p>Meals, ingredients, and preparation styles that ground daily life and celebrations.</p>
       </header>
 
       <section className="content-grid">

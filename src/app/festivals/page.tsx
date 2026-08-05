@@ -6,7 +6,7 @@ export default function FestivalsPage() {
       <header className="page-header">
         <p className="eyebrow">Festivals</p>
         <h1>Seasonal celebrations and gatherings</h1>
-        <p>Learn about the festivals that bring people together in Southern Kaduna.</p>
+        <p>Festivals, harvest rites, and community moments that continue to shape local identity.</p>
       </header>
 
       <section className="content-grid">

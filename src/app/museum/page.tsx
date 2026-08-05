@@ -6,7 +6,7 @@ export default function MuseumPage() {
       <header className="page-header">
         <p className="eyebrow">Museum</p>
         <h1>Preserving local heritage</h1>
-        <p>Explore cultural artifacts and the stories behind them.</p>
+        <p>Artifacts, imagery, and context arranged as a calm digital exhibition.</p>
       </header>
 
       <MuseumGallery />

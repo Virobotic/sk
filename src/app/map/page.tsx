@@ -30,25 +30,27 @@ export default function MapPage() {
       <header className="page-header">
         <p className="eyebrow">Map</p>
         <h1>Language map</h1>
-        <p>Click a language to view its location on the live map.</p>
+        <p>Choose a community and switch between street and satellite views.</p>
       </header>
 
       <section className="grid-layout">
-        <aside className="card" style={{ maxWidth: 360 }}>
-          <h3>Languages</h3>
-          <ul style={{ listStyle: "none", padding: 0 }}>
+        <aside className="card stack">
+          <h3>Communities</h3>
+          <p>Pick a language community to inspect its location.</p>
+          <div className="stack">
             {languageLocations.map((loc) => (
-              <li key={loc.id} style={{ marginBottom: 10 }}>
-                <button
-                  className={`button secondary${selectedId === loc.id ? " active" : ""}`}
-                  onClick={() => setSelectedId(loc.id)}
-                  style={{ width: "100%", justifyContent: "start" }}
-                >
-                  <span className="iconify" data-icon="mdi:map-marker" /> {loc.name}
-                </button>
-              </li>
+              <button
+                key={loc.id}
+                type="button"
+                className={`button secondary${selectedId === loc.id ? " active" : ""}`}
+                onClick={() => setSelectedId(loc.id)}
+                style={{ width: "100%", justifyContent: "space-between" }}
+              >
+                <span>{loc.name}</span>
+                <span>{loc.lat.toFixed(3)}, {loc.lon.toFixed(3)}</span>
+              </button>
             ))}
-          </ul>
+          </div>
         </aside>
 
         <div className="card" style={{ minHeight: 420 }}>

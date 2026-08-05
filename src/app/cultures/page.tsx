@@ -6,7 +6,7 @@ export default function CulturesPage() {
       <header className="page-header">
         <p className="eyebrow">Cultures</p>
         <h1>Communities of Southern Kaduna</h1>
-        <p>Explore a selection of communities and the stories they carry.</p>
+        <p>Selected communities, presented in a quiet card layout that keeps the focus on the stories.</p>
       </header>
 
       <section className="content-grid">
