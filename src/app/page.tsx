@@ -11,6 +11,8 @@ import GalleryPage from "./gallery/page";
 import MuseumPage from "./museum/page";
 import TourismPage from "./tourism/page";
 import MapPage from "./map/page";
+import TribesPage from "./tribes/page";
+import TribeDetailPage from "./tribes/detail";
 import ContactPage from "./contact/page";
 import southernKaduna from "../data/southernKaduna.json";
 
@@ -75,6 +77,8 @@ export default function AppPage() {
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/museum" element={<MuseumPage />} />
           <Route path="/tourism" element={<TourismPage />} />
+          <Route path="/tribes" element={<TribesPage />} />
+          <Route path="/tribes/:slug" element={<TribeDetailPage />} />
           <Route path="/map" element={<MapPage />} />
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
