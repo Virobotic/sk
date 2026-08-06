@@ -10,15 +10,25 @@ export default function FestivalsPage() {
       </header>
 
       <section className="content-grid">
-        {festivals.map((festival) => (
-          <article key={festival.id} className="card content-card festival-card">
-            {festival.image ? (
-              <img src={festival.image} alt={festival.name} className="card-image" />
-            ) : null}
-            <h2>{festival.name}</h2>
-            <p>{festival.description}</p>
-          </article>
-        ))}
+        {festivals.map((festival) => {
+          const excerpt = festival.description.length > 120
+            ? `${festival.description.slice(0, 120)}…`
+            : festival.description;
+
+          return (
+            <article key={festival.id} className="card content-card festival-card">
+              {festival.image ? (
+                <img src={festival.image} alt={festival.name} className="card-image" />
+              ) : null}
+              <h2>{festival.name}</h2>
+              <p>{excerpt}</p>
+              <details className="card-details">
+                <summary>Read more</summary>
+                <p>{festival.description}</p>
+              </details>
+            </article>
+          );
+        })}
       </section>
     </main>
   );

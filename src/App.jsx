@@ -20,7 +20,7 @@ function HomePage() {
               Explore cultures
             </Link>
             <Link className="secondary" to="/cultures">
-              Learn more
+              Learn mo
             </Link>
           </div>
 

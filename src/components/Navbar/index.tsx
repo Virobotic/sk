@@ -1,11 +1,16 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-const navItems = [
+const primaryLinks = [
   { label: "Home", to: "/" },
+  { label: "About", to: "/about" },
   { label: "Cultures", to: "/cultures" },
+  { label: "Gallery", to: "/gallery" },
+];
+
+const extraLinks = [
   { label: "Festivals", to: "/festivals" },
   { label: "Foods", to: "/foods" },
-  { label: "Gallery", to: "/gallery" },
   { label: "Museum", to: "/museum" },
   { label: "Tourism", to: "/tourism" },
   { label: "Map", to: "/map" },
@@ -13,6 +18,28 @@ const navItems = [
 ];
 
 export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) return;
+      if (
+        !target.closest(".nav-dropdown") &&
+        !target.closest(".more-button") &&
+        !target.closest(".mobile-menu") &&
+        !target.closest(".hamburger-button")
+      ) {
+        setMenuOpen(false);
+        setMobileOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <header className="navbar">
       <div className="brand-left">
@@ -23,36 +50,68 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="nav-center-space" />
+      <button
+        type="button"
+        className="hamburger-button"
+        onClick={() => setMobileOpen((open) => !open)}
+        aria-expanded={mobileOpen}
+        aria-label="Open navigation menu"
+      >
+        <span />
+        <span />
+        <span />
+      </button>
 
       <nav className="nav-links-right">
-        {navItems.map((item) => {
-          const iconMap: Record<string, string> = {
-            Home: "mdi:home",
-            Cultures: "mdi:account-group",
-            Festivals: "mdi:party-popper",
-            Foods: "mdi:food",
-            Gallery: "mdi:image-multiple",
-            Museum: "mdi:bank-museum",
-            Tourism: "mdi:binoculars",
-            Map: "mdi:map-marker",
-            Contact: "mdi:email",
-          };
-          const icon = iconMap[item.label] || "mdi:circle";
-          return (
+        {primaryLinks.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
+          >
+            {item.label}
+          </NavLink>
+        ))}
+
+        <div className="nav-dropdown">
+          <button
+            type="button"
+            className="nav-link more-button"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            More <span className="dropdown-arrow">{menuOpen ? "▴" : "▾"}</span>
+          </button>
+          {menuOpen && (
+            <div className="dropdown-panel">
+              {extraLinks.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+            </div>
+          )}
+        </div>
+      </nav>
+
+      {mobileOpen && (
+        <div className="mobile-menu">
+          {[...primaryLinks, ...extraLinks].map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
-              className={({ isActive }) =>
-                `nav-link${isActive ? " active" : ""}`
-              }
+              className={({ isActive }) => `nav-link mobile-link${isActive ? " active" : ""}`}
+              onClick={() => setMobileOpen(false)}
             >
-              <span className="iconify" data-icon={icon} data-inline="false" />
               {item.label}
             </NavLink>
-          );
-        })}
-      </nav>
+          ))}
+        </div>
+      )}
     </header>
   );
 }

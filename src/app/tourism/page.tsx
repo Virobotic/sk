@@ -10,15 +10,29 @@ export default function TourismPage() {
       </header>
 
       <section className="content-grid">
-        {tourism.map((place) => (
-          <article key={place.id} className="card content-card tourism-card">
-            {place.image ? (
-              <img src={place.image.startsWith("/") ? place.image : `/images/${place.image}`} alt={place.name} className="card-image" />
-            ) : null}
-            <h2>{place.name}</h2>
-            <p>{place.description}</p>
-          </article>
-        ))}
+        {tourism.map((place) => {
+          const excerpt = place.description.length > 120
+            ? `${place.description.slice(0, 120)}…`
+            : place.description;
+
+          return (
+            <article key={place.id} className="card content-card tourism-card">
+              {place.image ? (
+                <img
+                  src={place.image.startsWith("/") ? place.image : `/images/${place.image}`}
+                  alt={place.name}
+                  className="card-image"
+                />
+              ) : null}
+              <h2>{place.name}</h2>
+              <p>{excerpt}</p>
+              <details className="card-details">
+                <summary>Read more</summary>
+                <p>{place.description}</p>
+              </details>
+            </article>
+          );
+        })}
       </section>
     </main>
   );

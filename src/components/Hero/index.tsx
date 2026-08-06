@@ -1,30 +1,32 @@
 import { Link } from "react-router-dom";
 
+const heroImage = "/images/all tribes.png";
+const heroImageUrl = encodeURI(heroImage);
+
 export default function Hero() {
   return (
-    <section className="hero-card">
-      <div className="hero-copy">
-        <p className="eyebrow">Southern Kaduna</p>
-        <h1>Celebrate a living tapestry of culture, craft, and highland heritage.</h1>
-        <p>
-          Southern Kaduna is home to diverse ethnic communities, historic market towns,
-          and scenic landscapes like Kagoro Hills and Matsirga Waterfalls.
-        </p>
-        <div className="hero-actions">
-          <Link to="/cultures" className="button primary">
-            View Cultures
-          </Link>
-          <Link to="/festivals" className="button secondary">
-            Upcoming Festivals
-          </Link>
+    <section className="hero-card hero-fullscreen">
+      <div
+        className="hero-background"
+        style={{ backgroundImage: `url(${heroImageUrl})` }}
+      />
+      <div className="hero-content hero-fullscreen-content">
+        <div className="hero-copy">
+          <p className="eyebrow">Southern Kaduna</p>
+          <h1>Heritage, landscape, and quiet community life.</h1>
+          <p>
+            Discover a thoughtfully simple view of this region’s festival culture,
+            language traditions, and scenic highlands.
+          </p>
+          <div className="hero-actions">
+            <Link to="/cultures" className="button primary">
+              Explore cultures
+            </Link>
+            <Link to="/gallery" className="button secondary">
+              View gallery
+            </Link>
+          </div>
         </div>
-      </div>
-      <div className="hero-visual">
-        <img
-          src="/images/kagorohill.jpg"
-          alt="Kagoro Hills in Southern Kaduna"
-          className="hero-image"
-        />
       </div>
     </section>
   );
