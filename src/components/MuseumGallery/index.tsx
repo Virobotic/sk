@@ -33,7 +33,7 @@ const galleryItems = [
 
 export default function MuseumGallery() {
   return (
-    <section className="content-grid gallery-grid">
+    <section className="content-grid gallery-grid responsive-gallery-grid">
       {galleryItems.map((item) => (
         <article key={item.id} className="card content-card gallery-card">
           <img src={item.image} alt={item.title} className="card-image" />
