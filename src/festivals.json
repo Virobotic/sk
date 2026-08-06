@@ -10,5 +10,17 @@
     "name": "Tuk-Ham",
     "description": "A festival of the Ham people highlighting storytelling, dance, and communal memory in southern Kaduna.",
     "image": "/images/ham.jfif"
+  },
+  {
+    "id": 3,
+    "name": "Kalankuwa Cultural Festival",
+    "description": "A post-harvest festival celebrating community, with music, dancing, and traditional performances.",
+    "image": "/images/kalankuwa.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Ninzo Cultural Day",
+    "description": "An annual event showcasing the rich traditions, attire, and history of the Ninzo people.",
+    "image": "/images/ninzo.png"
   }
 ]

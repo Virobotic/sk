@@ -10,5 +10,17 @@
     "name": "Matsirga Waterfalls",
     "description": "A stunning waterfall near Madakiya, popular for picnics, fishing, and nature walks.",
     "image": "/images/waterfall.jfif"
+  },
+  {
+    "id": 3,
+    "name": "Nok Village",
+    "description": "An archaeological site famous for the ancient Nok terracotta sculptures, dating back to 1500 BC.",
+    "image": "/images/nok.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Kajuru Castle",
+    "description": "A luxury medieval-style castle built in the 1980s, offering a unique tourist experience with breathtaking views.",
+    "image": "/images/kajuru.jpg"
   }
 ]

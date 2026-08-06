@@ -28,5 +28,23 @@
     "name": "kamanton",
     "description": "The kamanton people are known for their unique cultural practices and traditional crafts.",
     "image": "/images/all tribes.png"
+  },
+  {
+    "id": 6,
+    "name": "Ham (Jaba)",
+    "description": "The Ham people, found in Jaba, are known for their rich history, the Tuk Ham festival, and intricate pottery.",
+    "image": "/images/ham.jfif"
+  },
+  {
+    "id": 7,
+    "name": "Gbagyi (Gwari)",
+    "description": "Known for their resilience and farming prowess, the Gbagyi people have a unique tradition of carrying loads on their shoulders.",
+    "image": "/images/gbagyi.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Adara",
+    "description": "The Adara people are a prominent group with a rich cultural heritage, known for their farming and community values.",
+    "image": "/images/adara.jpg"
   }
 ]

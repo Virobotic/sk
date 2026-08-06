@@ -74,7 +74,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="home-gallery">
+      <section className="home-gallery responsive-gallery-grid">
         {southernKaduna.images.map((item) => (
           <article key={item.src} className="gallery-card minimal-gallery-card">
             <img src={item.src} alt={item.caption} className="gallery-image" />

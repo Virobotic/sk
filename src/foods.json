@@ -10,5 +10,17 @@
     "name": "Tuwo Shinkafa",
     "description": "A soft rice-based swallow eaten with sauces and stews during family gatherings.",
     "image": "/images/house.jfif"
+  },
+  {
+    "id": 3,
+    "name": "Fura da Nono",
+    "description": "A refreshing and nutritious drink made from fermented milk (nono) and ground millet (fura).",
+    "image": "/images/fura.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Pate (Acha)",
+    "description": "A traditional porridge made from fonio grain (acha), often cooked with vegetables and spices.",
+    "image": "/images/pate.jpg"
   }
 ]
