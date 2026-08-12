@@ -1,26 +1,34 @@
+/*
+  Responsive Grid for Galleries
+  This targets elements with the responsive-gallery-grid class.
+  The !important flag is used to ensure these rules override conflicting
+  styles from other stylesheets (like index.css).
+*/
 
-/* Default to 1 column on mobile */
-.gallery-grid.responsive-gallery-grid {
+/* Default to 1 column on mobile phones */
+.responsive-gallery-grid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(1, 1fr) !important;
   gap: 1rem;
 }
 
-/* Switch to 2 columns for tablets */
+/* Switch to 2 columns for tablets and small desktops */
 @media (min-width: 768px) {
-  .gallery-grid.responsive-gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .responsive-gallery-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 
-/* Switch to 4 columns for desktops */
+/* Switch to 4 columns for larger desktops */
 @media (min-width: 1024px) {
-  .gallery-grid.responsive-gallery-grid {
-    grid-template-columns: repeat(4, 1fr);
+  .responsive-gallery-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
   }
 }
 
-.gallery-grid.responsive-gallery-grid .card-image {
+/* Ensure images within the grid are sized consistently */
+.responsive-gallery-grid .card-image,
+.responsive-gallery-grid .gallery-image {
   width: 100%;
   height: 200px;
   object-fit: cover;

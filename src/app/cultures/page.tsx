@@ -1,4 +1,7 @@
 import cultures from "../../cultures.json";
+import { Link } from "react-router-dom";
+
+const tribeSlugs: Record<string, string> = { Bajju: "bajju", Atyap: "atyap", "Agworok (Kagoro)": "agworok", Irigwe: "irigwe", kamanton: "kamantan", "Ham (Jaba)": "ham", "Gbagyi (Gwari)": "gbagyi", Adara: "adara" };
 
 export default function CulturesPage() {
   return (
@@ -26,6 +29,7 @@ export default function CulturesPage() {
                 <summary>Read more</summary>
                 <p>{culture.description}</p>
               </details>
+              {tribeSlugs[culture.name] && <Link className="text-link card-profile-link" to={`/tribes/${tribeSlugs[culture.name]}`}>Explore community profile <span>→</span></Link>}
             </article>
           );
         })}

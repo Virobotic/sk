@@ -13,7 +13,16 @@ import TourismPage from "./tourism/page";
 import MapPage from "./map/page";
 import ContactPage from "./contact/page";
 import AboutPage from "./about/page";
+import LanguagesPage from "./languages/page";
+import TribePage from "./tribes/page";
+import LanguageDetailPage from "./languages/detail-page";
 import southernKaduna from "../data/southernKaduna.json";
+
+const experiences = [
+  { number: "01", title: "Cultural encounters", text: "Meet the customs, food, languages and ceremonies that give every community its distinct voice." },
+  { number: "02", title: "Heritage landmarks", text: "Trace the stories held in historic places, craft traditions and landscapes shaped over generations." },
+  { number: "03", title: "Living traditions", text: "Step into festivals, music and shared practices that continue to bring people together today." },
+];
 
 function HomePage() {
   return (
@@ -22,59 +31,58 @@ function HomePage() {
         <Hero />
       </section>
 
-      <section className="home-summary">
-        <div className="section-title">
-          <p>Discover Southern Kaduna</p>
-          <h2>Quiet, clear, and curated by local tradition.</h2>
+      <section className="legacy-intro">
+        <div className="legacy-intro-copy">
+          <p className="section-kicker">A journey through Southern Kaduna</p>
+          <h2>Journeys rooted in legacy.</h2>
         </div>
-
-        <div className="summary-grid">
-          <article className="summary-card">
-            <h3>Local heritage</h3>
-            <p>
-              The region’s identity lives in its people, patterns, and seasonal festivals.
-            </p>
-          </article>
-
-          <article className="summary-card">
-            <h3>Natural landmarks</h3>
-            <p>
-              Rolling hills, waterfalls, and market towns form a calm, scenic backdrop.
-            </p>
-          </article>
-
-          <article className="summary-card">
-            <h3>Living languages</h3>
-            <p>
-              Each community speaks through song, craft, and oral stories passed down
-              through generations.
-            </p>
-          </article>
+        <div className="legacy-intro-text">
+          <p>
+            Southern Kaduna holds a remarkable wealth of language, landscape and
+            community memory. Follow its stories through places, people and traditions
+            that invite a slower, more meaningful way to explore.
+          </p>
+          <a className="text-link" href="#experiences">Discover the stories <span>→</span></a>
         </div>
       </section>
 
-      <section className="featured-stories">
-        <div className="section-title">
-          <p>Featured stories</p>
-          <h2>Voices from the region</h2>
-        </div>
-        <div className="featured-grid">
-          <article className="story-card">
-            <h3>Traditional basket weaving</h3>
-            <p>Women from local communities carry forward generations of woven forms and patterns.</p>
-          </article>
-          <article className="story-card">
-            <h3>Market day traditions</h3>
-            <p>Market gatherings are social hubs where music, food, and storytelling meet.</p>
-          </article>
-          <article className="story-card">
-            <h3>Language as heritage</h3>
-            <p>Each language holds songs, prayers, and histories that connect families across time.</p>
-          </article>
+      <section className="experience-section" id="experiences">
+        <header className="section-heading centered-heading">
+          <p className="section-kicker">Explore with intention</p>
+          <h2>More than a place to see.</h2>
+        </header>
+        <div className="experience-grid">
+          {experiences.map((experience) => (
+            <article className="experience-card" key={experience.number}>
+              <span>{experience.number}</span>
+              <h3>{experience.title}</h3>
+              <p>{experience.text}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      <section className="home-gallery responsive-gallery-grid">
+      <section className="feature-split">
+        <div className="feature-split-image">
+          <img src="/images/kagorohill1.png" alt="Kagoro Hills landscape" />
+        </div>
+        <div className="feature-split-copy">
+          <p className="section-kicker">A landscape with a memory</p>
+          <h2>Discover the stories behind every horizon.</h2>
+          <p>
+            From the Kagoro Hills to the rhythms of market day, the region offers
+            encounters shaped by generations of local knowledge and care for place.
+          </p>
+          <a className="button outline-button" href="#gallery">Explore destinations</a>
+        </div>
+      </section>
+
+      <section className="home-gallery-section" id="gallery">
+        <header className="section-heading gallery-heading">
+          <div><p className="section-kicker">Selected places</p><h2>Stories in every direction.</h2></div>
+          <a className="text-link" href="/gallery">View all images <span>→</span></a>
+        </header>
+        <div className="home-gallery responsive-gallery-grid">
         {southernKaduna.images.map((item) => (
           <article key={item.src} className="gallery-card minimal-gallery-card">
             <img src={item.src} alt={item.caption} className="gallery-image" />
@@ -83,11 +91,19 @@ function HomePage() {
             </div>
           </article>
         ))}
+        </div>
       </section>
 
-      <section className="home-info-row">
+      <section className="home-info-row heritage-tools">
         <CulturalMap />
         <LanguageExplorer />
+      </section>
+
+      <section className="journey-cta">
+        <p className="section-kicker">Start exploring</p>
+        <h2>Let Southern Kaduna stay with you.</h2>
+        <p>Find a starting point among its cultures, gatherings, languages and landscapes.</p>
+        <a className="button light-button" href="/cultures">Begin your journey</a>
       </section>
     </main>
   );
@@ -105,7 +121,10 @@ export default function AppPage() {
         <Route path="/festivals" element={<FestivalsPage />} />
         <Route path="/foods" element={<FoodsPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
-        <Route path="/about" element={<AboutPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/languages" element={<LanguagesPage />} />
+          <Route path="/languages/:slug" element={<LanguageDetailPage />} />
+          <Route path="/tribes/:slug" element={<TribePage />} />
         <Route path="/museum" element={<MuseumPage />} />
         <Route path="/tourism" element={<TourismPage />} />
         <Route path="/map" element={<MapPage />} />

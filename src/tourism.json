@@ -15,12 +15,12 @@
     "id": 3,
     "name": "Nok Village",
     "description": "An archaeological site famous for the ancient Nok terracotta sculptures, dating back to 1500 BC.",
-    "image": "/images/nok.jpg"
+    "image": "/images/nok village.jpg"
   },
   {
     "id": 4,
     "name": "Kajuru Castle",
     "description": "A luxury medieval-style castle built in the 1980s, offering a unique tourist experience with breathtaking views.",
-    "image": "/images/kajuru.jpg"
+    "image": "/images/kajuru castle.jpg"
   }
 ]

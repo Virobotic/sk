@@ -9,7 +9,7 @@
     "id": 2,
     "name": "Atyap",
     "description": "The Atyap community around Zangon Kataf preserves music, dance, and local history through storytelling.",
-    "image": "/images/atyap.jfif"
+    "image": "/images/atap.png"
   },
   {
     "id": 3,
@@ -45,6 +45,6 @@
     "id": 8,
     "name": "Adara",
     "description": "The Adara people are a prominent group with a rich cultural heritage, known for their farming and community values.",
-    "image": "/images/adara.jpg"
+    "image": "/images/adara.png"
   }
 ]
