@@ -1,51 +1,42 @@
-import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-interface AuthContextType {
-  isAuthenticated: boolean;
-  login: (password: string) => Promise<boolean>;
-  logout: () => void;
+type Admin = { email: string };
+type AuthContextValue = {
+  admin: Admin | null;
+  isAdmin: boolean;
+  isLoading: boolean;
+  login: (email: string, password: string) => Promise<string | null>;
+  logout: () => Promise<void>;
+};
+const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+
+async function readError(response: Response) {
+  const data = await response.json().catch(() => ({}));
+  return data.error || "Something went wrong. Please try again.";
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [admin, setAdmin] = useState<Admin | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    // Check for auth state on initial load
-    const storedAuth = localStorage.getItem('isAuthenticated');
-    if (storedAuth === 'true') {
-      setIsAuthenticated(true);
-    }
+    fetch("/api/auth/me", { credentials: "include" })
+      .then(async (response) => { if (response.ok) setAdmin((await response.json()).admin); })
+      .finally(() => setIsLoading(false));
   }, []);
-
-  const login = async (password: string): Promise<boolean> => {
-    // In a real app, this would be a fetch call to a backend.
-    // We are mocking it here. The password should be in an env variable.
-    if (password === 'your_secret_password_here') { // Replace with process.env.VITE_ADMIN_PASSWORD in a real setup
-      localStorage.setItem('isAuthenticated', 'true');
-      setIsAuthenticated(true);
-      return true;
-    }
-    return false;
+  const login = async (email: string, password: string) => {
+    try {
+      const response = await fetch("/api/auth/login", { method: "POST", credentials: "include", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, password }) });
+      if (!response.ok) return readError(response);
+      const data = await response.json();
+      setAdmin(data.admin);
+      return null;
+    } catch { return "The server is unavailable. Start the API server and try again."; }
   };
-
-  const logout = () => {
-    localStorage.removeItem('isAuthenticated');
-    setIsAuthenticated(false);
-  };
-
-  return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
-
-export const useAuth = () => {
+  const logout = async () => { await fetch("/api/auth/logout", { method: "POST", credentials: "include" }); setAdmin(null); };
+  return <AuthContext.Provider value={{ admin, isAdmin: Boolean(admin), isLoading, login, logout }}>{children}</AuthContext.Provider>;
+}
+export function useAuth() {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
-};
+}

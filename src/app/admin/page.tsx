@@ -14,21 +14,21 @@ export default function AdminPage() {
   const [message, setMessage] = useState('');
 
   const handleLogout = async () => {
-    logout();
+    await logout();
     navigate('/login');
   };
 
   const handleContactSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    updateContent({ contactEmail: contact.email, contactPhone: contact.phone });
-    setMessage('Contact information updated successfully!');
+    const error = await updateContent({ contactEmail: contact.email, contactPhone: contact.phone });
+    setMessage(error ?? 'Contact information updated successfully!');
     setTimeout(() => setMessage(''), 3000);
   };
 
   const handleGallerySubmit = async (e: FormEvent) => {
     e.preventDefault();
-    updateContent({ galleryItems });
-    setMessage('Gallery items updated successfully!');
+    const error = await updateContent({ galleryItems });
+    setMessage(error ?? 'Gallery items updated successfully!');
     setTimeout(() => setMessage(''), 3000);
   };
 

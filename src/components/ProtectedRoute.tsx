@@ -3,10 +3,12 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const ProtectedRoute = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAdmin, isLoading } = useAuth();
   const location = useLocation();
 
-  if (!isAuthenticated) {
+  if (isLoading) return <main className="page-content"><p>Checking administrator access…</p></main>;
+
+  if (!isAdmin) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
