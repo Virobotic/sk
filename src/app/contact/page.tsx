@@ -1,3 +1,7 @@
+'use client';
+
+import { useSiteContent } from '../../context/SiteContentContext';
+
 export default function ContactPage() {
   return (
     <main className="page-content contact-page">
@@ -7,14 +11,32 @@ export default function ContactPage() {
         <p>Reach out for collaborations, research, or cultural projects.</p>
       </header>
 
-      <section className="contact-card card">
-        <div className="contact-grid">
-          <div>
-            <h2>Get in touch</h2>
-            <p>Email: info@southernkaduna.example</p>
-            <p>Phone: +234 800 123 4567</p>
-          </div>
+      <ContactSection />
+    </main>
+  );
+}
 
+function ContactSection() {
+  const { content } = useSiteContent();
+
+  return (
+    <section className="contact-card card">
+      <div className="contact-grid">
+        <div>
+          <h2>Get in touch</h2>
+          <>
+            <p>Email: {content.contactEmail}</p>
+            <p>Phone: {content.contactPhone}</p>
+          </>
+        </div>
+        <ContactForm />
+      </div>
+    </section>
+  );
+}
+
+function ContactForm() {
+  return (
           <form className="contact-form-inner" onSubmit={(e) => e.preventDefault()}>
             <div className="field">
               <label className="label"><span className="iconify" data-icon="mdi:account" /> Name</label>
@@ -33,8 +55,5 @@ export default function ContactPage() {
               <button className="button secondary" type="reset"><span className="iconify" data-icon="mdi:refresh" /> Reset</button>
             </div>
           </form>
-        </div>
-      </section>
-    </main>
   );
 }

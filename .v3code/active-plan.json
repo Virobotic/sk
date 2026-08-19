@@ -1,0 +1,21 @@
+{
+  "threadId": "vscode-chat-session://local/MjdiODc0YjMtMDZjYy00ZDZhLWFlM2QtZDI1MGJmZGRiOWI3",
+  "updatedAt": 1787137764502,
+  "todos": [
+    {
+      "id": "audit",
+      "content": "Audit project: build errors, config, package.json, entry points",
+      "status": "in_progress"
+    },
+    {
+      "id": "fix",
+      "content": "Fix all errors found (config, imports, TypeScript, dead Next.js files)",
+      "status": "pending"
+    },
+    {
+      "id": "verify",
+      "content": "Run lint + production build to verify everything passes",
+      "status": "pending"
+    }
+  ]
+}
