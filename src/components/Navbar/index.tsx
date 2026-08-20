@@ -14,6 +14,7 @@ const extraLinks = [
   { label: "Foods", to: "/foods" },
   { label: "Museum", to: "/museum" },
   { label: "Map", to: "/map" },
+  { label: "Admin", to: "/admin" },
   { label: "Contact", to: "/contact" },
 ];
 
