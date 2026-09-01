@@ -1,4 +1,5 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
@@ -41,8 +42,39 @@ function HomePage() {
   </main>;
 }
 
+function ScrollMotion({ path }: { path: string }) {
+  useEffect(() => {
+    const elements = Array.from(document.querySelectorAll<HTMLElement>(
+      ".legacy-intro, .experience-section .section-heading, .experience-card, .feature-split-image, .feature-split-copy, .home-gallery-section .section-heading, .minimal-gallery-card, .home-info-row .card, .journey-cta > *, .page-header, .content-grid, .grid-layout, .about-grid, .language-directory, .contact-card, .tribe-facts, .tribe-reading, .language-profile-grid"
+    ));
+    elements.forEach((element, index) => {
+      element.classList.add("scroll-reveal");
+      element.style.setProperty("--reveal-delay", `${Math.min(index % 4, 3) * 90}ms`);
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-revealed");
+          observer.unobserve(entry.target);
+        }
+      }),
+      { threshold: 0.12, rootMargin: "0px 0px -36px" }
+    );
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, [path]);
+
+  return null;
+}
+
 function AppRoutes() {
-  return <div className="app-frame"><Navbar /><Routes>
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/login";
+  const isAdminPage = location.pathname.startsWith("/admin");
+  const showSiteChrome = !isLoginPage && !isAdminPage;
+
+  return <div className="app-frame">{showSiteChrome && <Navbar />}<ScrollMotion path={location.pathname} /><div className="route-transition" key={location.pathname}><Routes>
     <Route path="/" element={<HomePage />} />
     <Route path="/cultures" element={<CulturesPage />} />
     <Route path="/festivals" element={<FestivalsPage />} />
@@ -59,7 +91,7 @@ function AppRoutes() {
     <Route path="/login" element={<LoginPage />} />
     <Route element={<ProtectedRoute />}><Route path="/admin" element={<AdminPage />} /></Route>
     <Route path="*" element={<Navigate to="/" replace />} />
-  </Routes><Footer /></div>;
+  </Routes></div>{showSiteChrome && <Footer />}</div>;
 }
 
 export default function AppPage() {

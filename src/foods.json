@@ -3,19 +3,19 @@
     "id": 1,
     "name": "Miyan Kuka",
     "description": "A hearty soup prepared from powdered baobab leaves and served with fufu or rice.",
-    "image": "/images/images.jfif"
+    "image": "/images/kuka.jpg"
   },
   {
     "id": 2,
     "name": "Tuwo Shinkafa",
     "description": "A soft rice-based swallow eaten with sauces and stews during family gatherings.",
-    "image": "/images/house.jfif"
+    "image": "/images/tuwo shinkafa.jpg"
   },
   {
     "id": 3,
     "name": "Fura da Nono",
     "description": "A refreshing and nutritious drink made from fermented milk (nono) and ground millet (fura).",
-    "image": "/images/fura.jpg"
+    "image": "/images/furada nono.jpg"
   },
   {
     "id": 4,

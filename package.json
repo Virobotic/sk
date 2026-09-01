@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently -k \"npm run server\" \"vite\"",
+    "dev": "node scripts/dev.mjs",
     "dev:client": "vite",
     "server": "node server/index.js",
     "reset-admin-password": "node server/reset-admin-password.js",

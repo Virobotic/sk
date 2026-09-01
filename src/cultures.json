@@ -21,13 +21,13 @@
     "id": 4,
     "name": "Irigwe",
     "description": "The Irigwe people blend storytelling, carving, and farming traditions in a region rich with community ritual.",
-    "image": "/images/house.jfif"
+    "image": "/images/irigwe.jpg"
   },
    {
     "id": 5,
     "name": "kamanton",
     "description": "The kamanton people are known for their unique cultural practices and traditional crafts.",
-    "image": "/images/all tribes.png"
+    "image": "/images/kamatan.png"
   },
   {
     "id": 6,

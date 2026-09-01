@@ -44,42 +44,6 @@ export default function AdminPage() {
     setGalleryItems(newItems);
   };
 
-  const handleImageUpload = async (index: number, file: File | null) => {
-    if (!file) return;
-
-    try {
-      const reader = new FileReader();
-      const result = await new Promise<string>((resolve, reject) => {
-        reader.onload = () => {
-          if (typeof reader.result === 'string') resolve(reader.result);
-          else reject(new Error('Unable to read file'));
-        };
-        reader.onerror = () => reject(new Error('Unable to read file'));
-        reader.readAsDataURL(file);
-      });
-
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ file: result, fileName: file.name })
-      });
-
-      const data = await response.json();
-      if (!response.ok) {
-        setMessage(data.error || 'Image upload failed.');
-        return;
-      }
-
-      handleGalleryItemChange(index, 'image', data.url);
-      setMessage('Image uploaded successfully!');
-      setTimeout(() => setMessage(''), 2500);
-    } catch (error) {
-      setMessage('Image upload failed.');
-      setTimeout(() => setMessage(''), 2500);
-    }
-  };
-
   const removeGalleryItem = (id: number) => {
     setGalleryItems(galleryItems.filter(item => item.id !== id));
   };
@@ -93,8 +57,8 @@ export default function AdminPage() {
     <div className="admin-container">
       {message && (
         <div className={`admin-toast ${message.includes('Error') ? 'error' : 'success'}`}>
-          <span className="iconify toast-icon" data-icon={message.includes('Error') ? 'mdi:alert-circle-outline' : 'mdi:check-circle-outline'} aria-hidden="true" />
-          <span>{message}</span>
+          <Icon icon={message.includes('Error') ? 'mdi:alert-circle' : 'mdi:check-circle'} />
+          {message}
         </div>
       )}
 
@@ -102,7 +66,9 @@ export default function AdminPage() {
       <aside className="admin-sidebar">
         <div className="admin-header">
           <div className="admin-profile">
-            <div className="admin-avatar"><span className="iconify" data-icon="mdi:account-circle-outline" aria-hidden="true" /></div>
+            <div className="admin-avatar">
+              <Icon icon="mdi:account-circle" width="48" height="48" />
+            </div>
             <h3>Admin Panel</h3>
             <p>Manage Your Site</p>
           </div>
@@ -113,28 +79,28 @@ export default function AdminPage() {
             className={`admin-nav-item ${activeTab === 'overview' ? 'active' : ''}`}
             onClick={() => setActiveTab('overview')}
           >
-            <span className="iconify nav-icon" data-icon="mdi:view-dashboard-outline" aria-hidden="true" />
+            <Icon icon="mdi:view-dashboard" />
             <span>Dashboard</span>
           </button>
           <button
             className={`admin-nav-item ${activeTab === 'contact' ? 'active' : ''}`}
             onClick={() => setActiveTab('contact')}
           >
-            <span className="iconify nav-icon" data-icon="mdi:phone-outline" aria-hidden="true" />
+            <Icon icon="mdi:phone-in" />
             <span>Contact Info</span>
           </button>
           <button
             className={`admin-nav-item ${activeTab === 'gallery' ? 'active' : ''}`}
             onClick={() => setActiveTab('gallery')}
           >
-            <span className="iconify nav-icon" data-icon="mdi:image-multiple-outline" aria-hidden="true" />
+            <Icon icon="mdi:image-multiple" />
             <span>Gallery</span>
           </button>
         </nav>
 
         <div className="admin-footer">
           <button className="admin-logout-btn" onClick={handleLogout}>
-            <span className="iconify logout-icon" data-icon="mdi:logout" aria-hidden="true" />
+            <Icon icon="mdi:logout" />
             <span>Logout</span>
           </button>
         </div>
@@ -162,7 +128,9 @@ export default function AdminPage() {
 
               <div className="dashboard-grid">
                 <div className="dashboard-card">
-                  <div className="card-icon gallery"><span className="iconify" data-icon="mdi:image-multiple-outline" aria-hidden="true" /></div>
+                  <div className="card-icon gallery">
+                    <Icon icon="mdi:image-multiple" />
+                  </div>
                   <div className="card-content">
                     <p className="card-label">Gallery Items</p>
                     <p className="card-value">{galleryItems.length}</p>
@@ -170,7 +138,9 @@ export default function AdminPage() {
                 </div>
 
                 <div className="dashboard-card">
-                  <div className="card-icon contact"><span className="iconify" data-icon="mdi:email-outline" aria-hidden="true" /></div>
+                  <div className="card-icon contact">
+                    <Icon icon="mdi:email" />
+                  </div>
                   <div className="card-content">
                     <p className="card-label">Contact Email</p>
                     <p className="card-value">{contact.email.split('@')[0]}</p>
@@ -178,7 +148,9 @@ export default function AdminPage() {
                 </div>
 
                 <div className="dashboard-card">
-                  <div className="card-icon settings"><span className="iconify" data-icon="mdi:cog-outline" aria-hidden="true" /></div>
+                  <div className="card-icon settings">
+                    <Icon icon="mdi:cog" />
+                  </div>
                   <div className="card-content">
                     <p className="card-label">Last Updated</p>
                     <p className="card-value">Today</p>
@@ -186,7 +158,9 @@ export default function AdminPage() {
                 </div>
 
                 <div className="dashboard-card">
-                  <div className="card-icon status"><span className="iconify" data-icon="mdi:check-circle-outline" aria-hidden="true" /></div>
+                  <div className="card-icon status">
+                    <Icon icon="mdi:check-circle" />
+                  </div>
                   <div className="card-content">
                     <p className="card-label">Status</p>
                     <p className="card-value">Active</p>
@@ -197,11 +171,11 @@ export default function AdminPage() {
               <div className="quick-actions">
                 <h3>Quick Actions</h3>
                 <button className="action-btn" onClick={() => setActiveTab('contact')}>
-                  <span className="iconify" data-icon="mdi:pencil-outline" aria-hidden="true" />
+                  <Icon icon="mdi:pencil" />
                   Update Contact
                 </button>
                 <button className="action-btn" onClick={() => setActiveTab('gallery')}>
-                  <span className="iconify" data-icon="mdi:plus" aria-hidden="true" />
+                  <Icon icon="mdi:plus" />
                   Add Gallery Item
                 </button>
               </div>
@@ -220,7 +194,7 @@ export default function AdminPage() {
                 <form onSubmit={handleContactSubmit} className="admin-form">
                   <div className="form-group">
                     <label>
-                      <span className="iconify form-icon" data-icon="mdi:email-outline" aria-hidden="true" />
+                      <Icon icon="mdi:email" />
                       Email Address
                     </label>
                     <input
@@ -234,7 +208,7 @@ export default function AdminPage() {
 
                   <div className="form-group">
                     <label>
-                      <span className="iconify form-icon" data-icon="mdi:phone-outline" aria-hidden="true" />
+                      <Icon icon="mdi:phone" />
                       Phone Number
                     </label>
                     <input
@@ -247,7 +221,7 @@ export default function AdminPage() {
                   </div>
 
                   <button type="submit" className="submit-btn" disabled={loading}>
-                    <span className="iconify" data-icon={loading ? 'mdi:loading' : 'mdi:check'} aria-hidden="true" />
+                    <Icon icon={loading ? 'mdi:loading' : 'mdi:check'} />
                     {loading ? 'Updating...' : 'Update Information'}
                   </button>
                 </form>
@@ -279,26 +253,15 @@ export default function AdminPage() {
                               disabled={loading}
                             />
                           </div>
-                          <div className="form-group flex-1 image-upload-group">
-                            <label>Image</label>
-                            <div className="image-upload-box">
-                              {item.image ? (
-                                <img src={item.image} alt={item.title || 'Gallery item'} className="gallery-upload-preview" />
-                              ) : (
-                                <div className="image-upload-placeholder">
-                                  <span className="iconify" data-icon="mdi:image-outline" aria-hidden="true" />
-                                </div>
-                              )}
-                              <label className="upload-button">
-                                <input
-                                  type="file"
-                                  accept="image/*"
-                                  onChange={(e) => handleImageUpload(index, e.target.files?.[0] || null)}
-                                  disabled={loading}
-                                />
-                                Upload image
-                              </label>
-                            </div>
+                          <div className="form-group flex-1">
+                            <label>Image Path</label>
+                            <input
+                              type="text"
+                              value={item.image}
+                              onChange={(e) => handleGalleryItemChange(index, 'image', e.target.value)}
+                              placeholder="/images/..."
+                              disabled={loading}
+                            />
                           </div>
                           <button
                             type="button"
@@ -306,7 +269,7 @@ export default function AdminPage() {
                             onClick={() => removeGalleryItem(item.id)}
                             disabled={loading}
                           >
-                            <span className="iconify" data-icon="mdi:delete-outline" aria-hidden="true" />
+                            <Icon icon="mdi:trash-can" />
                           </button>
                         </div>
                       </div>
@@ -320,11 +283,11 @@ export default function AdminPage() {
                       onClick={addGalleryItem}
                       disabled={loading}
                     >
-                      <span className="iconify" data-icon="mdi:plus" aria-hidden="true" />
+                      <Icon icon="mdi:plus" />
                       Add Gallery Item
                     </button>
                     <button type="submit" className="submit-btn" disabled={loading}>
-                      <span className="iconify" data-icon={loading ? 'mdi:loading' : 'mdi:check'} aria-hidden="true" />
+                      <Icon icon={loading ? 'mdi:loading' : 'mdi:check'} />
                       {loading ? 'Updating...' : 'Update Gallery'}
                     </button>
                   </div>

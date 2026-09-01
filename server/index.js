@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import jwt from "jsonwebtoken";
 import path from "node:path";
+import fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import pg from "pg";
 
@@ -15,6 +16,9 @@ const port = process.env.PORT || 3001;
 const isProduction = process.env.NODE_ENV === "production";
 const databaseUrl = process.env.DATABASE_URL;
 const jwtSecret = process.env.JWT_SECRET;
+const resendApiKey = process.env.RESEND_API_KEY;
+const contactRecipient = process.env.CONTACT_RECIPIENT_EMAIL || process.env.ADMIN_EMAIL;
+const contactFrom = process.env.CONTACT_FROM_EMAIL;
 
 if (!databaseUrl || !jwtSecret) throw new Error("DATABASE_URL and JWT_SECRET must be set.");
 const pool = new Pool({ connectionString: databaseUrl, ssl: process.env.DATABASE_SSL === "true" ? { rejectUnauthorized: false } : undefined });
@@ -49,8 +53,24 @@ function authenticate(request, response, next) {
   } catch { response.status(401).json({ error: "Authentication required." }); }
 }
 
-app.use(express.json({ limit: "1mb" }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cookieParser());
+
+app.post("/api/contact", async (request, response) => {
+  const name = String(request.body.name || "").trim();
+  const email = String(request.body.email || "").trim();
+  const message = String(request.body.message || "").trim();
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!name || !emailPattern.test(email) || !message) return response.status(400).json({ error: "Please provide your name, a valid email address, and a message." });
+  if (name.length > 120 || email.length > 254 || message.length > 5000) return response.status(400).json({ error: "Your message is too long." });
+  if (!resendApiKey || !contactRecipient || !contactFrom) return response.status(503).json({ error: "The contact form email service has not been configured yet." });
+  try {
+    const resendResponse = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${resendApiKey}`, "Content-Type": "application/json" }, body: JSON.stringify({ from: contactFrom, to: [contactRecipient], reply_to: email, subject: `Website contact from ${name}`, text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}` }) });
+    if (!resendResponse.ok) { console.error("Contact email failed:", await resendResponse.text()); return response.status(502).json({ error: "Unable to send your message right now. Please try again later." }); }
+    response.status(201).json({ message: "Your message has been sent." });
+  } catch (error) { console.error("Contact email failed:", error); response.status(502).json({ error: "Unable to send your message right now. Please try again later." }); }
+});
 
 app.post("/api/auth/login", async (request, response) => {
   const email = String(request.body.email || "").trim().toLowerCase();
@@ -76,7 +96,38 @@ app.put("/api/content", authenticate, async (request, response) => {
 });
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const dist = path.join(here, "..", "dist");
+const projectRoot = path.join(here, "..");
+const uploadsDir = path.join(projectRoot, "uploads");
+const dist = path.join(projectRoot, "dist");
+
+if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+app.use("/uploads", express.static(uploadsDir));
+
+app.post("/api/upload", authenticate, async (request, response) => {
+  try {
+    const file = request.body?.file;
+    const fileName = request.body?.fileName;
+    if (!file || typeof file !== "string" || !fileName || typeof fileName !== "string") {
+      return response.status(400).json({ error: "No image file was provided." });
+    }
+
+    const matches = file.match(/^data:image\/(png|jpeg|jpg|gif|webp);base64,(.+)$/i);
+    if (!matches) return response.status(400).json({ error: "Unsupported image format." });
+
+    const ext = matches[1].toLowerCase();
+    const cleanName = fileName.replace(/[^a-zA-Z0-9._-]/g, "-").replace(/-+/g, "-");
+    const safeName = `${Date.now()}-${cleanName || `upload.${ext}`}`;
+    const fullPath = path.join(uploadsDir, safeName);
+    const buffer = Buffer.from(matches[2], "base64");
+
+    fs.writeFileSync(fullPath, buffer);
+    response.status(201).json({ url: `/uploads/${safeName}` });
+  } catch (error) {
+    console.error("Upload failed:", error);
+    response.status(500).json({ error: "Image upload failed." });
+  }
+});
+
 if (isProduction) { app.use(express.static(dist)); app.get("/{*splat}", (_request, response) => response.sendFile(path.join(dist, "index.html"))); }
 
 prepareDatabase().then(() => app.listen(port, () => console.log(`Server listening on port ${port}`))).catch((error) => { console.error("Database setup failed:", error); process.exit(1); });
