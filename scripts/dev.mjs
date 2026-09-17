@@ -10,6 +10,11 @@ function startServer() {
   server.on("error", (error) => console.error("Unable to start the API server:", error));
   server.on("exit", (code, signal) => {
     if (shuttingDown) return;
+    if (code !== 0) {
+      console.error(`API server stopped (${signal || `code ${code}`}).`);
+      shutdown(code ?? 1);
+      return;
+    }
     console.warn(`API server stopped unexpectedly (${signal || `code ${code}`}); restarting...`);
     setTimeout(startServer, 500);
   });

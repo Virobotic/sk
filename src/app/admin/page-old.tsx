@@ -57,7 +57,6 @@ export default function AdminPage() {
     <div className="admin-container">
       {message && (
         <div className={`admin-toast ${message.includes('Error') ? 'error' : 'success'}`}>
-          <Icon icon={message.includes('Error') ? 'mdi:alert-circle' : 'mdi:check-circle'} />
           {message}
         </div>
       )}
@@ -66,9 +65,7 @@ export default function AdminPage() {
       <aside className="admin-sidebar">
         <div className="admin-header">
           <div className="admin-profile">
-            <div className="admin-avatar">
-              <Icon icon="mdi:account-circle" width="48" height="48" />
-            </div>
+            <div className="admin-avatar" aria-hidden="true">A</div>
             <h3>Admin Panel</h3>
             <p>Manage Your Site</p>
           </div>
@@ -79,28 +76,24 @@ export default function AdminPage() {
             className={`admin-nav-item ${activeTab === 'overview' ? 'active' : ''}`}
             onClick={() => setActiveTab('overview')}
           >
-            <Icon icon="mdi:view-dashboard" />
             <span>Dashboard</span>
           </button>
           <button
             className={`admin-nav-item ${activeTab === 'contact' ? 'active' : ''}`}
             onClick={() => setActiveTab('contact')}
           >
-            <Icon icon="mdi:phone-in" />
             <span>Contact Info</span>
           </button>
           <button
             className={`admin-nav-item ${activeTab === 'gallery' ? 'active' : ''}`}
             onClick={() => setActiveTab('gallery')}
           >
-            <Icon icon="mdi:image-multiple" />
             <span>Gallery</span>
           </button>
         </nav>
 
         <div className="admin-footer">
           <button className="admin-logout-btn" onClick={handleLogout}>
-            <Icon icon="mdi:logout" />
             <span>Logout</span>
           </button>
         </div>
@@ -128,9 +121,6 @@ export default function AdminPage() {
 
               <div className="dashboard-grid">
                 <div className="dashboard-card">
-                  <div className="card-icon gallery">
-                    <Icon icon="mdi:image-multiple" />
-                  </div>
                   <div className="card-content">
                     <p className="card-label">Gallery Items</p>
                     <p className="card-value">{galleryItems.length}</p>
@@ -138,9 +128,6 @@ export default function AdminPage() {
                 </div>
 
                 <div className="dashboard-card">
-                  <div className="card-icon contact">
-                    <Icon icon="mdi:email" />
-                  </div>
                   <div className="card-content">
                     <p className="card-label">Contact Email</p>
                     <p className="card-value">{contact.email.split('@')[0]}</p>
@@ -148,9 +135,6 @@ export default function AdminPage() {
                 </div>
 
                 <div className="dashboard-card">
-                  <div className="card-icon settings">
-                    <Icon icon="mdi:cog" />
-                  </div>
                   <div className="card-content">
                     <p className="card-label">Last Updated</p>
                     <p className="card-value">Today</p>
@@ -158,9 +142,6 @@ export default function AdminPage() {
                 </div>
 
                 <div className="dashboard-card">
-                  <div className="card-icon status">
-                    <Icon icon="mdi:check-circle" />
-                  </div>
                   <div className="card-content">
                     <p className="card-label">Status</p>
                     <p className="card-value">Active</p>
@@ -171,11 +152,9 @@ export default function AdminPage() {
               <div className="quick-actions">
                 <h3>Quick Actions</h3>
                 <button className="action-btn" onClick={() => setActiveTab('contact')}>
-                  <Icon icon="mdi:pencil" />
                   Update Contact
                 </button>
                 <button className="action-btn" onClick={() => setActiveTab('gallery')}>
-                  <Icon icon="mdi:plus" />
                   Add Gallery Item
                 </button>
               </div>
@@ -194,7 +173,6 @@ export default function AdminPage() {
                 <form onSubmit={handleContactSubmit} className="admin-form">
                   <div className="form-group">
                     <label>
-                      <Icon icon="mdi:email" />
                       Email Address
                     </label>
                     <input
@@ -208,7 +186,6 @@ export default function AdminPage() {
 
                   <div className="form-group">
                     <label>
-                      <Icon icon="mdi:phone" />
                       Phone Number
                     </label>
                     <input
@@ -221,7 +198,6 @@ export default function AdminPage() {
                   </div>
 
                   <button type="submit" className="submit-btn" disabled={loading}>
-                    <Icon icon={loading ? 'mdi:loading' : 'mdi:check'} />
                     {loading ? 'Updating...' : 'Update Information'}
                   </button>
                 </form>
@@ -269,7 +245,7 @@ export default function AdminPage() {
                             onClick={() => removeGalleryItem(item.id)}
                             disabled={loading}
                           >
-                            <Icon icon="mdi:trash-can" />
+                            Remove
                           </button>
                         </div>
                       </div>
@@ -283,11 +259,9 @@ export default function AdminPage() {
                       onClick={addGalleryItem}
                       disabled={loading}
                     >
-                      <Icon icon="mdi:plus" />
                       Add Gallery Item
                     </button>
                     <button type="submit" className="submit-btn" disabled={loading}>
-                      <Icon icon={loading ? 'mdi:loading' : 'mdi:check'} />
                       {loading ? 'Updating...' : 'Update Gallery'}
                     </button>
                   </div>

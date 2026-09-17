@@ -54,21 +54,21 @@ function ContactForm() {
   return (
           <form className="contact-form-inner" onSubmit={handleSubmit}>
             <div className="field">
-              <label className="label"><span className="iconify" data-icon="mdi:account" /> Name</label>
+              <label className="label">Name</label>
               <input className="input" type="text" name="name" placeholder="Your name" required disabled={isSending} />
             </div>
             <div className="field">
-              <label className="label"><span className="iconify" data-icon="mdi:email" /> Email</label>
+              <label className="label">Email</label>
               <input className="input" type="email" name="email" placeholder="you@example.com" required disabled={isSending} />
             </div>
             <div className="field">
-              <label className="label"><span className="iconify" data-icon="mdi:message-text" /> Message</label>
+              <label className="label">Message</label>
               <textarea className="input" name="message" rows={5} placeholder="Write your message" required disabled={isSending} />
             </div>
             {status && <p role="status" className={`contact-form-status ${status.type}`}>{status.message}</p>}
             <div style={{ display: 'flex', gap: 12 }}>
-              <button className="button primary" type="submit" disabled={isSending}><span className="iconify" data-icon="mdi:send" /> {isSending ? 'Sending…' : 'Send'}</button>
-              <button className="button secondary" type="reset" disabled={isSending}><span className="iconify" data-icon="mdi:refresh" /> Reset</button>
+              <button className="button primary" type="submit" disabled={isSending}>{isSending ? 'Sending…' : 'Send'}</button>
+              <button className="button secondary" type="reset" disabled={isSending}>Reset</button>
             </div>
           </form>
   );

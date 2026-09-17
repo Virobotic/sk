@@ -34,7 +34,7 @@ export default function LoginPage() {
           </div>
           <div className="login-lang">
             <button className="lang-toggle" aria-label="Language selector">
-              🌍 EN
+              EN
             </button>
           </div>
         </div>

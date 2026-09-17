@@ -5,13 +5,22 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import path from "node:path";
 import fs from "node:fs";
+import { createServer } from "node:http";
 import { fileURLToPath } from "node:url";
 import pg from "pg";
+import { Server } from "socket.io";
 
 dotenv.config({ path: ".env.local" });
 
 const { Pool } = pg;
 const app = express();
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: true,
+    credentials: true,
+  },
+});
 const port = process.env.PORT || 3001;
 const isProduction = process.env.NODE_ENV === "production";
 const databaseUrl = process.env.DATABASE_URL;
@@ -36,6 +45,21 @@ async function prepareDatabase() {
       content jsonb not null default '{}'::jsonb,
       updated_at timestamptz not null default now()
     );
+    create table if not exists language_chat_rooms (
+      id serial primary key,
+      slug text unique not null,
+      title text not null,
+      created_at timestamptz not null default now()
+    );
+    create table if not exists language_chat_messages (
+      id serial primary key,
+      room_slug text not null references language_chat_rooms(slug) on delete cascade,
+      display_name text not null,
+      message text not null,
+      created_at timestamptz not null default now()
+    );
+    create index if not exists language_chat_messages_room_created_idx
+      on language_chat_messages (room_slug, created_at desc);
     insert into site_content (id) values (1) on conflict (id) do nothing;
   `);
   const { rows: [{ count }] } = await pool.query("select count(*)::int as count from admins");
@@ -95,6 +119,84 @@ app.put("/api/content", authenticate, async (request, response) => {
   response.json(rows[0]);
 });
 
+function normalizeLanguageSlug(value) {
+  return String(value || "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
+function formatLanguageRoomTitle(slug) {
+  return String(slug || "community").split("-").filter(Boolean).map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(" ");
+}
+
+async function ensureLanguageChatRoom(slug) {
+  const normalized = normalizeLanguageSlug(slug);
+  if (!normalized) throw new Error("A valid language slug is required.");
+
+  const existing = await pool.query("select * from language_chat_rooms where slug = $1", [normalized]);
+  if (existing.rows[0]) return existing.rows[0];
+
+  const created = await pool.query(
+    "insert into language_chat_rooms (slug, title) values ($1, $2) returning *",
+    [normalized, formatLanguageRoomTitle(normalized)]
+  );
+  return created.rows[0];
+}
+
+app.get("/api/chat/room/:slug", async (request, response) => {
+  try {
+    const slug = normalizeLanguageSlug(request.params.slug);
+    if (!slug) return response.status(400).json({ error: "A valid language slug is required." });
+
+    const room = await ensureLanguageChatRoom(slug);
+    const { rows: messages } = await pool.query(
+      "select id, room_slug, display_name, message, created_at from language_chat_messages where room_slug = $1 order by created_at asc limit 200",
+      [slug]
+    );
+
+    response.json({ room, messages });
+  } catch (error) {
+    console.error("Chat room lookup failed:", error);
+    response.status(500).json({ error: "Unable to load the language chat right now." });
+  }
+});
+
+app.post("/api/chat/room/:slug/message", async (request, response) => {
+  try {
+    const slug = normalizeLanguageSlug(request.params.slug);
+    const room = await ensureLanguageChatRoom(slug);
+
+    const displayName = String(request.body?.displayName || "Guest").trim().slice(0, 40) || "Guest";
+    const message = String(request.body?.message || "").trim();
+
+    if (!message) return response.status(400).json({ error: "Please write a message before sending." });
+    if (message.length > 1000) return response.status(400).json({ error: "Messages must be 1000 characters or fewer." });
+
+    const { rows: [savedMessage] } = await pool.query(
+      "insert into language_chat_messages (room_slug, display_name, message) values ($1, $2, $3) returning id, room_slug, display_name, message, created_at",
+      [room.slug, displayName, message]
+    );
+
+    io.to(`language:${room.slug}`).emit("language-message", savedMessage);
+    response.status(201).json(savedMessage);
+  } catch (error) {
+    console.error("Chat message save failed:", error);
+    response.status(500).json({ error: "Unable to send the message right now." });
+  }
+});
+
+io.on("connection", (socket) => {
+  socket.on("join-language-room", (slug) => {
+    const normalizedSlug = normalizeLanguageSlug(slug);
+    if (!normalizedSlug) return;
+    socket.join(`language:${normalizedSlug}`);
+  });
+
+  socket.on("leave-language-room", (slug) => {
+    const normalizedSlug = normalizeLanguageSlug(slug);
+    if (!normalizedSlug) return;
+    socket.leave(`language:${normalizedSlug}`);
+  });
+});
+
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(here, "..");
 const uploadsDir = path.join(projectRoot, "uploads");
@@ -130,4 +232,4 @@ app.post("/api/upload", authenticate, async (request, response) => {
 
 if (isProduction) { app.use(express.static(dist)); app.get("/{*splat}", (_request, response) => response.sendFile(path.join(dist, "index.html"))); }
 
-prepareDatabase().then(() => app.listen(port, () => console.log(`Server listening on port ${port}`))).catch((error) => { console.error("Database setup failed:", error); process.exit(1); });
+prepareDatabase().then(() => server.listen(port, () => console.log(`Server listening on port ${port}`))).catch((error) => { console.error("Database setup failed:", error); process.exit(1); });

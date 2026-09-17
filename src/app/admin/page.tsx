@@ -93,7 +93,6 @@ export default function AdminPage() {
     <div className="admin-container">
       {message && (
         <div className={`admin-toast ${message.includes('Error') ? 'error' : 'success'}`}>
-          <span className="iconify toast-icon" data-icon={message.includes('Error') ? 'mdi:alert-circle-outline' : 'mdi:check-circle-outline'} aria-hidden="true" />
           <span>{message}</span>
         </div>
       )}
@@ -102,7 +101,7 @@ export default function AdminPage() {
       <aside className="admin-sidebar">
         <div className="admin-header">
           <div className="admin-profile">
-            <div className="admin-avatar"><span className="iconify" data-icon="mdi:account-circle-outline" aria-hidden="true" /></div>
+            <div className="admin-avatar" aria-hidden="true">A</div>
             <h3>Admin Panel</h3>
             <p>Manage Your Site</p>
           </div>
@@ -113,28 +112,24 @@ export default function AdminPage() {
             className={`admin-nav-item ${activeTab === 'overview' ? 'active' : ''}`}
             onClick={() => setActiveTab('overview')}
           >
-            <span className="iconify nav-icon" data-icon="mdi:view-dashboard-outline" aria-hidden="true" />
             <span>Dashboard</span>
           </button>
           <button
             className={`admin-nav-item ${activeTab === 'contact' ? 'active' : ''}`}
             onClick={() => setActiveTab('contact')}
           >
-            <span className="iconify nav-icon" data-icon="mdi:phone-outline" aria-hidden="true" />
             <span>Contact Info</span>
           </button>
           <button
             className={`admin-nav-item ${activeTab === 'gallery' ? 'active' : ''}`}
             onClick={() => setActiveTab('gallery')}
           >
-            <span className="iconify nav-icon" data-icon="mdi:image-multiple-outline" aria-hidden="true" />
             <span>Gallery</span>
           </button>
         </nav>
 
         <div className="admin-footer">
           <button className="admin-logout-btn" onClick={handleLogout}>
-            <span className="iconify logout-icon" data-icon="mdi:logout" aria-hidden="true" />
             <span>Logout</span>
           </button>
         </div>
@@ -162,7 +157,6 @@ export default function AdminPage() {
 
               <div className="dashboard-grid">
                 <div className="dashboard-card">
-                  <div className="card-icon gallery"><span className="iconify" data-icon="mdi:image-multiple-outline" aria-hidden="true" /></div>
                   <div className="card-content">
                     <p className="card-label">Gallery Items</p>
                     <p className="card-value">{galleryItems.length}</p>
@@ -170,7 +164,6 @@ export default function AdminPage() {
                 </div>
 
                 <div className="dashboard-card">
-                  <div className="card-icon contact"><span className="iconify" data-icon="mdi:email-outline" aria-hidden="true" /></div>
                   <div className="card-content">
                     <p className="card-label">Contact Email</p>
                     <p className="card-value">{contact.email.split('@')[0]}</p>
@@ -178,7 +171,6 @@ export default function AdminPage() {
                 </div>
 
                 <div className="dashboard-card">
-                  <div className="card-icon settings"><span className="iconify" data-icon="mdi:cog-outline" aria-hidden="true" /></div>
                   <div className="card-content">
                     <p className="card-label">Last Updated</p>
                     <p className="card-value">Today</p>
@@ -186,7 +178,6 @@ export default function AdminPage() {
                 </div>
 
                 <div className="dashboard-card">
-                  <div className="card-icon status"><span className="iconify" data-icon="mdi:check-circle-outline" aria-hidden="true" /></div>
                   <div className="card-content">
                     <p className="card-label">Status</p>
                     <p className="card-value">Active</p>
@@ -197,11 +188,9 @@ export default function AdminPage() {
               <div className="quick-actions">
                 <h3>Quick Actions</h3>
                 <button className="action-btn" onClick={() => setActiveTab('contact')}>
-                  <span className="iconify" data-icon="mdi:pencil-outline" aria-hidden="true" />
                   Update Contact
                 </button>
                 <button className="action-btn" onClick={() => setActiveTab('gallery')}>
-                  <span className="iconify" data-icon="mdi:plus" aria-hidden="true" />
                   Add Gallery Item
                 </button>
               </div>
@@ -220,7 +209,6 @@ export default function AdminPage() {
                 <form onSubmit={handleContactSubmit} className="admin-form">
                   <div className="form-group">
                     <label>
-                      <span className="iconify form-icon" data-icon="mdi:email-outline" aria-hidden="true" />
                       Email Address
                     </label>
                     <input
@@ -234,7 +222,6 @@ export default function AdminPage() {
 
                   <div className="form-group">
                     <label>
-                      <span className="iconify form-icon" data-icon="mdi:phone-outline" aria-hidden="true" />
                       Phone Number
                     </label>
                     <input
@@ -247,7 +234,6 @@ export default function AdminPage() {
                   </div>
 
                   <button type="submit" className="submit-btn" disabled={loading}>
-                    <span className="iconify" data-icon={loading ? 'mdi:loading' : 'mdi:check'} aria-hidden="true" />
                     {loading ? 'Updating...' : 'Update Information'}
                   </button>
                 </form>
@@ -285,8 +271,8 @@ export default function AdminPage() {
                               {item.image ? (
                                 <img src={item.image} alt={item.title || 'Gallery item'} className="gallery-upload-preview" />
                               ) : (
-                                <div className="image-upload-placeholder">
-                                  <span className="iconify" data-icon="mdi:image-outline" aria-hidden="true" />
+                                <div className="image-upload-placeholder" aria-label="No image selected">
+                                  No image
                                 </div>
                               )}
                               <label className="upload-button">
@@ -306,7 +292,7 @@ export default function AdminPage() {
                             onClick={() => removeGalleryItem(item.id)}
                             disabled={loading}
                           >
-                            <span className="iconify" data-icon="mdi:delete-outline" aria-hidden="true" />
+                            Remove
                           </button>
                         </div>
                       </div>
@@ -320,11 +306,9 @@ export default function AdminPage() {
                       onClick={addGalleryItem}
                       disabled={loading}
                     >
-                      <span className="iconify" data-icon="mdi:plus" aria-hidden="true" />
                       Add Gallery Item
                     </button>
                     <button type="submit" className="submit-btn" disabled={loading}>
-                      <span className="iconify" data-icon={loading ? 'mdi:loading' : 'mdi:check'} aria-hidden="true" />
                       {loading ? 'Updating...' : 'Update Gallery'}
                     </button>
                   </div>
