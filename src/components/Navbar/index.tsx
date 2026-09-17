@@ -101,7 +101,7 @@ export default function Navbar() {
 
       {mobileOpen && (
         <div className="mobile-menu">
-          {[...primaryLinks, ...extraLinks, { label: "Plan your visit", to: "/contact" }].map((item) => (
+          {[...primaryLinks, ...extraLinks.filter((item) => item.to !== "/contact"), { label: "Plan your visit", to: "/contact" }].map((item) => (
             <NavLink 
               key={item.to} 
               to={item.to} 
